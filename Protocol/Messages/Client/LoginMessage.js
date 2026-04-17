@@ -11,9 +11,31 @@ class LoginMessage extends PiranhaMessage {
   }
 
     async decode(){
-        /* */
+        this.a = this.readLong() // player id?
+        this.b = this.readString() // token?
+        this.c = this.readInt()
+        this.d = this.readInt()
+        this.e = this.readInt()
+        this.f = this.readString()
+        this.g = this.readString()
+        this.h = this.readString()
+        this.i = this.readString()
+        
     }
     async process(){
+        console.log(```
+            {
+                "a": "${this.a}",
+                "b": "${this.b}",
+                "c": ${this.c},
+                "d": ${this.d},
+                "e": ${this.e},
+                "f": "${this.f}",
+                "g": "${this.g}",
+                "h": "${this.h}",
+                "i": "${this.i}"
+            }           
+            ```)
         new LoginOkMessage(this.client).send()
         new OwnHomeDataMessage(this.client).send()
     }

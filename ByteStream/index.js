@@ -1,5 +1,5 @@
 const ByteArray = require('./ByteArray')
-const Messaging = require('../Classes/Messaging/Messaging')
+const RC4Encrypter = require('../Classes/Messaging/RC4Encrypter')
 
 /**
   * ByteStream
@@ -7,7 +7,7 @@ const Messaging = require('../Classes/Messaging/Messaging')
   * For clear communication between client and server.
   * 
   */
-class ByteStream extends Messaging {
+class ByteStream {
   constructor (data) {
     // eslint-disable-next-line new-cap
     super()
@@ -318,6 +318,20 @@ class ByteStream extends Messaging {
       const tmpBuffer = new Buffer.alloc(capacity)
       this.buffer = Buffer.concat([this.buffer, tmpBuffer])
     }
+  }
+
+  send () {
+        if (this.id < 20000) return;
+
+        this.encode()
+        this.buffer = new RC4Encrypter().encrypt(this.buffer)
+
+        const header = Buffer.alloc(7)
+        header.writeUInt16BE(this.id, 0)
+        header.writeUIntBE(this.buffer.length, 2, 3)
+        header.writeUInt16BE(this.version, 5)
+        this.client.write(Buffer.concat([header, this.buffer]))
+        this.client.log(`Packet ${this.id} (${this.constructor.name}) was sent.`)
   }
 }
 

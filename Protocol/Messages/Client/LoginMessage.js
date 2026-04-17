@@ -3,11 +3,12 @@ let OwnHomeDataMessage = require('../Server/OwnHomeDataMessage')
 let LoginOkMessage = require('../Server/LoginOkMessage')
 
 class LoginMessage extends PiranhaMessage {
-    constructor(bytes, client){
-        super(bytes)
-        this.client = client
-        this.version = 0
-    }
+  constructor (bytes, client) {
+    super(bytes)
+    this.client = client
+    this.id = 10101
+    this.version = 0
+  }
 
     async decode(){
         /* */

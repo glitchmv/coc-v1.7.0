@@ -1,4 +1,5 @@
 const ByteArray = require('./ByteArray')
+const Messaging = require('../Classes/Messaging/Messaging')
 
 /**
   * ByteStream
@@ -6,9 +7,10 @@ const ByteArray = require('./ByteArray')
   * For clear communication between client and server.
   * 
   */
-class ByteStream {
+class ByteStream extends Messaging {
   constructor (data) {
     // eslint-disable-next-line new-cap
+    super()
     this.buffer = data != null ? data : Buffer.alloc(0)
     this.length = 0
     this.offset = 0
@@ -316,22 +318,6 @@ class ByteStream {
       const tmpBuffer = new Buffer.alloc(capacity)
       this.buffer = Buffer.concat([this.buffer, tmpBuffer])
     }
-  }
-
-  /**
-   * Send a packet to the server.
-   */
-  send () {
-    if (this.id < 20000) return;
-
-    this.encode()
-
-    const header = Buffer.alloc(7)
-    header.writeUInt16BE(this.id, 0)
-    header.writeUIntBE(this.buffer.length, 2, 3)
-    header.writeUInt16BE(this.version, 5)
-    this.client.write(Buffer.concat([header, this.buffer, Buffer.from([0xFF, 0xFF, 0x0, 0x0, 0x0, 0x0, 0x0])]))
-    this.client.log(`Packet ${this.id} (${this.constructor.name}) was sent.`)
   }
 }
 

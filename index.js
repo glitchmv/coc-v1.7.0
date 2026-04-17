@@ -2,6 +2,7 @@ const net = require('net')
 const MessageFactory = require('./Protocol/MessageFactory')
 const server = new net.Server()
 const Messages = new MessageFactory()
+const RC4Encrypter = require('./Classes/Messaging/RC4Encrypter')
 
 const PORT = 9339
 
@@ -23,6 +24,7 @@ server.on('connection', async (client) => {
       payload: packet.slice(7, this.len),
       client,
     }
+    message.payload = new RC4Encrypter().decrypt(message.payload)
     if (packets.indexOf(String(message.id)) !== -1) {
       try {
         const packet = new (Messages.handle(message.id))(message.payload, client)

@@ -10,7 +10,6 @@ const RC4Encrypter = require('../Classes/Messaging/RC4Encrypter')
 class ByteStream {
   constructor (data) {
     // eslint-disable-next-line new-cap
-    super()
     this.buffer = data != null ? data : Buffer.alloc(0)
     this.length = 0
     this.offset = 0

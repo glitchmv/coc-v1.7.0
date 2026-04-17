@@ -23,19 +23,6 @@ class LoginMessage extends PiranhaMessage {
         
     }
     async process(){
-        console.log(```
-            {
-                "a": "${this.a}",
-                "b": "${this.b}",
-                "c": ${this.c},
-                "d": ${this.d},
-                "e": ${this.e},
-                "f": "${this.f}",
-                "g": "${this.g}",
-                "h": "${this.h}",
-                "i": "${this.i}"
-            }           
-            ```)
         new LoginOkMessage(this.client).send()
         new OwnHomeDataMessage(this.client).send()
     }

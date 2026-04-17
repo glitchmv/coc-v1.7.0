@@ -2,9 +2,9 @@ let LogicBase = require('../Base/LogicBase')
 
 module.exports = class {
     encode(stream) {
-        LogicBase.encode(stream)
-        stream.writeLong(1,0) // player id?
-        stream.writeLong(1,0) // player id?
+        new LogicBase().encode(stream)
+        stream.writeLong(0,1) // player id?
+        stream.writeLong(0,1) // player id?
         stream.writeBoolean(false) // array
         stream.writeInt(0)
         stream.writeInt(0)

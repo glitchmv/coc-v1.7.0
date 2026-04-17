@@ -10,8 +10,8 @@ class OwnHomeDataMessage extends PiranhaMessage {
         this.version = 0
     }
     async encode() {
-        LogicClientHome.encode(this)
-        LogicClientAvatar.encode(this)
+        new LogicClientHome().encode(this)
+        new LogicClientAvatar().encode(this)
     }
 }
 
